@@ -41,7 +41,7 @@ program
 Example:
   $ npx create-jambonz-app my-app`)
   .option('-s, --scenario <scenario>',
-    'generates sample webhooks for specified scenarios, default is dial and tts', ['tts', 'dial']);
+    'generates sample webhooks for specified scenarios, default is dial and tts', '\'tts\', \'dial\'');
 
 program.parse();
 const opts = program.opts();
