@@ -1,0 +1,12 @@
+{
+  "name": "{{ appName }}",
+  "version": "0.0.1",
+  "description": "jambonz webhook application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "jslint": "eslint app.js lib"
+  },
+  "author": "",
+  "license": "MIT"
+}
