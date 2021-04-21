@@ -1,40 +1,34 @@
-# create-drachtio-app ![CI](https://github.com/drachtio/create-drachtio-app/workflows/CI/badge.svg)
+# create-drachtiojambonz-app 
 
-Usage: npx create-drachtio-app [options] project-name
+Usage: npx create-jambonz-app [options] project-name
 ```
 Options:
   -h, --help                        display help for command
-  -m, --media                       include the drachtio-fsmrf package for media control
-  -r, --request-types <methods...>  list the SIP request types to handle, or 'all' (default: ["invite"])
-  -t, --test                        generate a docker-based test suite
+  -s, --scenario <scenarios..>      list the scenarios you want to implement or 'all' (default: ["tts", "dial"])
   -v, --version                     display the current version
 ```
 
+The following scenarios are available:
+- auth: an example device registration webhook
+- dial: an example dial verb
+- record: an example websocket server that receives real-time audio from a 'listen' command 
+- tts: an example tts verb
+
 **Example**: 
 
-Scaffold an application that wants to handle INVITEs and REGISTERs, with a test suite and with media control support
+Scaffold a webhook application
 
 ```bash
-  $ npx create-drachtio-app -m -t -r invite register my-app
+  $ npx create-jambonz-app  my-app
 
-Creating a new drachtio app in /Users/perpich/test/my-app
-
-  $ cd my-app
-  $ npm test
-
-  starting docker network..
-
-    ✔ docker network is up
-
-  sip tests
-
-    ✔ invite test passes
-    ✔ register test passes
-
-  stopping docker network..
-
-  total:     3
-  passing:   3
-  duration:  7.3s
+Creating a new jambonz app in /Users/perpich/test/my-app
+Installing packages...
 ```
+After that, edit the my-app/ecosystem.config.js file to set necessary environment variables for the webhooks and then start your app
+
+```bash
+cd my-app
+edit ecosystem.config.js
+node app.js
+```sx
 

@@ -45,14 +45,11 @@ Example:
 
 program.parse();
 const opts = program.opts();
-console.log(opts);
 opts.scenario = (opts.scenario.split(',').map((s) => s.trim()) || []).map((r) => r.toLowerCase());
 const extra = opts.scenario.filter((r) => !scenarios.includes(r));
 const folder = extra.length ? extra[0] : (program.args.length ? program.args[0] : null);
 const includeAll = opts.scenario.includes('all');
 if (!folder) program.help();
-
-console.log(opts);
 
 const cwd = process.cwd();
 const target = `${cwd}/${folder}`;
