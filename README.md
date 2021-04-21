@@ -17,7 +17,7 @@ The following scenarios are available:
 **Example**: 
 
 ```bash
-  $ npx create-jambonz-app --scenarios 'dial, auth, tts' my-app
+$ npx create-jambonz-app --scenarios 'dial, auth, tts' my-app
 
 Creating a new jambonz app in /Users/perpich/test/my-app
 Installing packages...
@@ -28,5 +28,5 @@ After that, edit the my-app/ecosystem.config.js file to set necessary environmen
 cd my-app
 edit ecosystem.config.js
 node app.js
-```sx
+```bash
 
