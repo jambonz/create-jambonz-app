@@ -3,16 +3,13 @@ assert.ok(process.env.JAMBONZ_ACCOUNT_SID, 'You must define the JAMBONZ_ACCOUNT_
 assert.ok(process.env.JAMBONZ_API_KEY, 'You must define the JAMBONZ_API_KEY env variable');
 assert.ok(process.env.JAMBONZ_REST_API_BASE_URL, 'You must define the JAMBONZ_REST_API_BASE_URL env variable');
 {% if record %}
-assert.ok(process.env.process.env.WS_RECORD_PATH, 'You must define the WS_RECORD_PATH env variable');
+assert.ok(process.env.WS_RECORD_PATH, 'You must define the WS_RECORD_PATH env variable');
 {% endif %}
 
 const express = require('express');
 const app = express();
 {% if record %}
 const Websocket = require('ws');
-{% endif %}
-{% if auth %}
-const {calculateResponse} = require('./lib/utils.js')(logger);
 {% endif %}
 const {WebhookResponse} = require('@jambonz/node-client');
 const basicAuth = require('express-basic-auth');
@@ -21,6 +18,9 @@ const opts = Object.assign({
   level: process.env.LOGLEVEL || 'info'
 });
 const logger = require('pino')(opts);
+{% if auth %}
+const {calculateResponse} = require('./lib/utils.js')(logger);
+{% endif %}
 const port = process.env.HTTP_PORT || 3000;
 const routes = require('./lib/routes');
 app.locals = {

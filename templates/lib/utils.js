@@ -3,9 +3,6 @@ var AWS      = require('aws-sdk') ;
 var S3Stream = require('s3-upload-stream');
 const Websocket = require('ws');
 const crypto = require('crypto');
-const { GoogleSpreadsheet } = require('google-spreadsheet');
-const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
-let sheet;
 
 module.exports = (logger) => {
 
@@ -77,7 +74,6 @@ module.exports = (logger) => {
 
   return {
     recordAudio,
-    calculateResponse,
-    languages
+    calculateResponse
   };
 };

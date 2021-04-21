@@ -137,6 +137,7 @@ const spawnCommand = (cmd, args) => {
   const devPackages = ['eslint-plugin-promise', 'eslint'];
   if (opts.scenario.includes('record') || includeAll) {
     Array.prototype.push.apply(packages, [
+      'ws',
       'aws-sdk',
       's3-upload-stream']);
   }
