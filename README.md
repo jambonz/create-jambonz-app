@@ -1,4 +1,4 @@
-# create-drachtiojambonz-app 
+# create-jambonz-app 
 
 Usage: npx create-jambonz-app [options] project-name
 ```
@@ -16,10 +16,8 @@ The following scenarios are available:
 
 **Example**: 
 
-Scaffold a webhook application
-
 ```bash
-  $ npx create-jambonz-app  my-app
+  $ npx create-jambonz-app --scenarios 'dial, auth, tts' my-app
 
 Creating a new jambonz app in /Users/perpich/test/my-app
 Installing packages...
