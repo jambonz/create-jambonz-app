@@ -3,7 +3,7 @@ const credentials = require('../../../data/credentials.json');
 
 /**
  * we are using a simple in-memory database as an example
- * but in real-life presumably you would store credentials in 
+ * but in real-life presumably you would store credentials in
  * a database of some sort..
  */
 router.post('/', async(req, res) => {
@@ -12,14 +12,14 @@ router.post('/', async(req, res) => {
     const {realm, username} = req.body;
     const myUsers = credentials[realm];
 
-    if (!realm) {
+    if (!myUsers) {
       logger.info(`rejecting auth attempt for unknown realm ${realm}`);
       return res.status(200).json({status: 'fail', msg: 'invalid sip realm'});
     }
 
-    const password = realm[username];
+    const password = myUsers[username];
     if (!password) {
-      logger.info(`rejecting auth attempt for unknown user ${realm}`);
+      logger.info(`rejecting auth attempt for unknown user ${username}@${realm}`);
       return res.status(200).json({status: 'fail', msg: 'unknown user'});
     }
     const myResponse = calculateResponse(req.body, password);

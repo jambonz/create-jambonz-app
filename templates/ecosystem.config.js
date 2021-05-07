@@ -10,6 +10,7 @@ module.exports = {
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'production',
+      LOGLEVEL: 'info',
       HTTP_PORT: 3000,
       JAMBONZ_ACCOUNT_SID: '',
       JAMBONZ_API_KEY: '',
