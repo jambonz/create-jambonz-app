@@ -142,7 +142,7 @@ const spawnCommand = (cmd, args) => {
 
   const packages = ['@jambonz/node-client', 'pino', 'debug', 'express', 'express-basic-auth'];
   const devPackages = ['eslint-plugin-promise', 'eslint'];
-  if (opts.scenario.includes('record') || includeAll) {
+  if (opts.scenario.includes('record') || opts.scenario.includes('auth') || includeAll) {
     Array.prototype.push.apply(packages, [
       'ws',
       'aws-sdk',
