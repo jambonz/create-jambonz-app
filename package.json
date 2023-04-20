@@ -20,7 +20,7 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "commander": "^7.1.0",
-    "nunjucks": "^3.2.2"
+    "nunjucks": "^3.2.4"
   },
   "devDependencies": {
     "eslint-plugin-promise": "^5.1.0"
