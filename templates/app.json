@@ -1,0 +1,28 @@
+{
+  {% if tts %}
+  "/hello-world": {
+    "text": {
+      "description": "Text to be spoken",
+      "type": "string",
+      "default": "Hi there and welcome to jam bones! Jam bones is the open source platform for telephonu and voice AI.  Looks like you have your system up and running.  Be sure to check out our docs at docs dot jamb bones dot org.  Have a great day!"
+    }
+  }{% if dial or record %},{% endif %}
+  {% endif %}
+  {% if dial %}
+  "/dial-time": {
+    "outdialNumber": {
+      "description": "phone number to dial",
+      "type": "string"
+    }
+  }{% if record %},{% endif %}
+  {% endif %}
+  {% if record %}
+  "/record": {
+    "wsRecordUrl": {
+      "description": "web socket url to record the call",
+      "type": "string",
+      "required": true
+    }
+  }
+  {% endif %}
+}

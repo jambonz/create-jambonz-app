@@ -18,11 +18,10 @@ const baseFiles = [
   'app.js',
   'index.js',
   'call-status.js',
-  '.eslintrc.json',
-  '.eslintignore',
   '.gitignore',
   'README.md',
-  'ecosystem.config.js'
+  'ecosystem.config.js',
+  'eslint.config.js'
 ];
 const pluginFiles = {
   tts: ['tts-hello-world.js'],
@@ -45,16 +44,36 @@ Scenarios available:
 - auth: authenticate sip devices, or
 - all: generate all of the above scenarios
 
+Options:
+  --enable-env    Enable environment variable support in the generated app
+
 Example:
   $ npx create-jambonz-app my-app`)
   .option('-s, --scenario <scenario>',
-    'generates sample webhooks for specified scenarios, default is dial and tts', 'tts, dial');
+    'generates sample webhooks for specified scenarios (required)')
+  .option('-e, --enable-env', 'Enable environment variable support in the generated app', false);
 
 program.parse();
 const opts = program.opts();
+if (!opts.scenario && program.args.length === 0) {
+  program.help();
+  process.exit(0);
+}
+if (!opts.scenario) {
+  console.error('Error: --scenario option is required');
+  program.help();
+  process.exit(1);
+}
 opts.scenario = (opts.scenario.split(',').map((s) => s.trim()) || []).map((r) => r.toLowerCase());
 const extra = opts.scenario.filter((r) => !scenarios.includes(r));
-const folder = extra.length ? extra[0] : (program.args.length ? program.args[0] : null);
+if (extra.length > 0) {
+  console.error(chalk.red(`Error: Invalid scenario(s) provided: ${extra.join(', ')}`));
+  console.error(chalk.yellow('Valid scenarios are:'));
+  scenarios.forEach(s => console.error(chalk.yellow(`- ${s}`)));
+  program.help();
+  process.exit(1);
+}
+const folder = program.args.length ? program.args[0] : null;
 const includeAll = opts.scenario.includes('all');
 if (!folder) program.help();
 
@@ -82,6 +101,7 @@ nunjucks.configure(`${__dirname}/../templates`, {
 });
 
 const shouldRender = (template) => {
+  if (template === 'app.json') return opts.enableEnv;
   if (baseFiles.includes(template)) return true;
   const baseName = path.basename(template);
   for (const prop in pluginFiles) {
@@ -102,6 +122,7 @@ const renderFolder = (folder, target) => {
           dial: opts.scenario.includes('dial') || includeAll,
           auth: opts.scenario.includes('auth') || includeAll,
           record: opts.scenario.includes('record') || includeAll,
+          enableEnv: opts.enableEnv
         }));
       }
     }
