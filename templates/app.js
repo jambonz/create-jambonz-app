@@ -18,8 +18,12 @@ const opts = Object.assign({
   level: process.env.LOGLEVEL || 'info'
 });
 const logger = require('pino')(opts);
-{% if auth %}
+{% if auth and not enableEnv %}
 const {calculateResponse} = require('./lib/utils.js')(logger);
+{% elif auth and enableEnv %}
+const {calculateResponse, processEnvProperty} = require('./lib/utils.js')(logger);
+{% elif enableEnv %}
+const {processEnvProperty} = require('./lib/utils.js')(logger);
 {% endif %}
 const port = process.env.HTTP_PORT || 3000;
 const routes = require('./lib/routes');
@@ -52,12 +56,23 @@ app.use(express.json());
 if (process.env.WEBHOOK_SECRET) {
   app.use(WebhookResponse.verifyJambonzSignature(process.env.WEBHOOK_SECRET));
 }
+{% if enableEnv %}app.use(processEnvProperty);{% endif %}
 app.use('/', routes);
+
+// Handle 404 - Not Found
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not Found' });
+});
+
+// Handle other errors
 app.use((err, req, res, next) => {
   logger.error(err, 'burped error');
   res.status(err.status || 500).json({msg: err.message});
 });
 
+{% if not record %}
+// eslint-disable-next-line no-unused-vars
+{% endif %}
 const server = app.listen(port, () => {
   logger.info(`Example jambonz app listening at http://localhost:${port}`);
 });

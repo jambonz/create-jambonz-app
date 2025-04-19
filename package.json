@@ -8,19 +8,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/drachtio/create-drachtio-app"
+    "url": "https://github.com/jambonz/create-jambonz-app"
   },
-  "readme": "https://github.com/drachtio/create-drachtio-app/blob/main/README.md",
+  "readme": "https://github.com/jambonz/create-jambonz-app/blob/main/README.md",
   "scripts": {
     "start": "node bin/index.js",
-    "jslint": "eslint bin/index.js"
+    "jslint": "eslint bin/index.js",
+    "prepublishOnly": "npm run jslint"
   },
   "author": "Dave Horton",
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.0",
     "commander": "^7.1.0",
-    "nunjucks": "^3.2.2"
+    "nunjucks": "^3.2.4"
   },
   "devDependencies": {
     "eslint-plugin-promise": "^5.1.0"

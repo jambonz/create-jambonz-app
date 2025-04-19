@@ -1,4 +1,3 @@
-
 var AWS      = require('aws-sdk') ;
 var S3Stream = require('s3-upload-stream');
 const Websocket = require('ws');
@@ -71,9 +70,28 @@ module.exports = (logger) => {
       logger.error({err}, 'recordAudio: error');
     });
   };
-
+{% if enableEnv %}
+  /**
+   * Middleware function to process environment properties from request body
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @param {Function} next - Express next middleware function
+   */
+  const processEnvProperty = (req, res, next) => {
+    req.locals = req.locals || {};
+    if (req.method === 'POST' && req.body && req.body.env) {
+      req.locals.env = req.body.env;
+      delete req.body.env;
+    }
+    else req.locals.env = {};
+    next();
+  };
+{% endif %}
   return {
     recordAudio,
-    calculateResponse
+    calculateResponse,
+{% if enableEnv %}
+    processEnvProperty
+{% endif %}
   };
 };
