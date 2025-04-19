@@ -45,7 +45,7 @@ Scenarios available:
 - all: generate all of the above scenarios
 
 Options:
-  --enable-env    Enable environment variable support in the generated app
+  --enable-env    Enable environment variable support in the generated app (experimental)
 
 Example:
   $ npx create-jambonz-app my-app`)
