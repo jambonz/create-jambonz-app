@@ -137,20 +137,20 @@ const spawnCommand = (cmd, args) => {
   return new Promise((resolve, reject) => {
     const child_process = spawn(cmd, args, {stdio: ['inherit', 'pipe', 'pipe']});
 
-    child_process.on('exit', (code, signal) => {
+    child_process.on('exit', (code, /*signal*/) => {
       if (code === 0) {
         return resolve();
       }
       reject(code);
     });
-    child_process.on('error', (error) => {
+    child_process.on('error', (/*error*/) => {
       console.log(`error spawning child process for docker: ${args}`);
     });
 
-    child_process.stdout.on('data', (data) => {
+    child_process.stdout.on('data', (/*data*/) => {
       //console.log(data.toString());
     });
-    child_process.stderr.on('data', (data) => {
+    child_process.stderr.on('data', (/*data*/) => {
       //console.log(data.toString());
     });
   });
