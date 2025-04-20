@@ -1,10 +1,14 @@
+{% if record %}
 var AWS      = require('aws-sdk') ;
 var S3Stream = require('s3-upload-stream');
 const Websocket = require('ws');
+{% endif %}
+{% if auth %}
 const crypto = require('crypto');
+{% endif %}
 
 module.exports = (logger) => {
-
+{% if auth %}
   const calculateResponse = ({username, realm, method, nonce, uri, nc, cnonce, qop}, password) => {
     const ha1 = crypto.createHash('md5');
     ha1.update([username, realm, password].join(':'));
@@ -31,7 +35,8 @@ module.exports = (logger) => {
 
     return response.digest('hex');
   };
-
+{% endif %}
+{% if record %}
   const recordAudio = async(logger, socket) => {
     socket.on('message', function(data) {
       /* first message is a JSON object containing metadata about the call */
@@ -70,6 +75,7 @@ module.exports = (logger) => {
       logger.error({err}, 'recordAudio: error');
     });
   };
+{% endif %}
 {% if enableEnv %}
   /**
    * Middleware function to process environment properties from request body
@@ -88,8 +94,12 @@ module.exports = (logger) => {
   };
 {% endif %}
   return {
+{% if record %}
     recordAudio,
+{% endif %}
+{% if auth %}
     calculateResponse,
+{% endif %}
 {% if enableEnv %}
     processEnvProperty
 {% endif %}
