@@ -101,9 +101,10 @@ nunjucks.configure(`${__dirname}/../templates`, {
 });
 
 const shouldRender = (template) => {
+  const baseName = path.basename(template);
   if (template === 'app.json') return opts.enableEnv;
   if (baseFiles.includes(template)) return true;
-  const baseName = path.basename(template);
+  if (opts.enableEnv && baseName === 'utils.js') return true;
   for (const prop in pluginFiles) {
     if ((opts.scenario.includes(prop) || includeAll) &&
       pluginFiles[prop].includes(baseName)) return true;
