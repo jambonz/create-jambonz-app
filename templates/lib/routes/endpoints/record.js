@@ -35,7 +35,7 @@ const appJson = require(appJsonPath);
 
 router.options('/', (req, res) => {
   const {logger} = req.app.locals;
-  logger.info(`OPTIONS request received for path: ${req.path}`);
+  logger.info(`OPTIONS request received for path: ${req.baseUrl}`);
 
   // First validate the app.json using SDK's validation
   const validationResult = validateAppConfig(appJson);
@@ -48,7 +48,7 @@ router.options('/', (req, res) => {
   }
 
   // Get the appropriate configuration using SDK's getAppConfig
-  const result = getAppConfig({ urlPath: req.path, appJsonPath });
+  const result = getAppConfig({ urlPath: req.baseUrl, appJsonPath });
   if (!result.success) {
     logger.error(result.error);
     return res.status(500).json({ error: result.error });
