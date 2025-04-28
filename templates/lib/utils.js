@@ -85,9 +85,9 @@ module.exports = (logger) => {
    */
   const processEnvProperty = (req, res, next) => {
     req.locals = req.locals || {};
-    if (req.method === 'POST' && req.body && req.body.env) {
-      req.locals.env = req.body.env;
-      delete req.body.env;
+    if (req.method === 'POST' && req.body && req.body.env_vars) {
+      req.locals.env = req.body.env_vars;
+      delete req.body.env_vars;
     }
     else req.locals.env = {};
     next();
