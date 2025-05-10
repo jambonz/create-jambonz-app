@@ -14,7 +14,7 @@ Try us out!
 router.post('/', (req, res) => {
   const {logger} = req.app.locals;
   {% if enableEnv %}
-  const {env} = req.locals;
+  const {env_vars} = req.locals;
   {% endif %}
 
   logger.debug({payload: req.body}, 'POST /hello-world');
@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
     app
       .pause({length: 1.5})
       {% if enableEnv %}
-      .say({text: env.text});
+      .say({text: env_vars.text});
       {% else %}
       .say({text});
       {% endif %}

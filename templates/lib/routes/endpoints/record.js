@@ -5,7 +5,7 @@ router.post('/', (req, res) => {
   const {logger} = req.app.locals;
   logger.debug({payload: req.body}, 'POST /record');
   {% if enableEnv %}
-  const {env} = req.locals;
+  const {env_vars} = req.locals;
   {% endif %}
   try {
     const app = new WebhookResponse();
@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
       }
     });
     app.listen({
-      url: {% if enableEnv %}env.wsRecordUrl{% else %}process.env.WS_RECORD_URL{% endif %}
+      url: {% if enableEnv %}env_vars.wsRecordUrl{% else %}process.env.WS_RECORD_URL{% endif %}
     });
     res.status(200).json(app);
   } catch (err) {

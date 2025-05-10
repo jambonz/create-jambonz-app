@@ -4,7 +4,7 @@ const WebhookResponse = require('@jambonz/node-client').WebhookResponse;
 router.post('/', (req, res) => {
   const {logger} = req.app.locals;
   {% if enableEnv %}
-  const {env} = req.locals;
+  const {env_vars} = req.locals;
   {% endif %}
   logger.debug({payload: req.body}, 'POST /dial-time');
   try {
@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
         {
           type: 'phone',
           {% if enableEnv %}
-          number: env.outdialNumber || process.env.TEST_OUTDIAL_PHONENUMBER || '13034997111'
+          number: env_vars.outdialNumber || process.env.TEST_OUTDIAL_PHONENUMBER || '13034997111'
           {% else %}
           number: process.env.TEST_OUTDIAL_PHONENUMBER || '13034997111'
           {% endif %}

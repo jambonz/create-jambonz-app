@@ -3,7 +3,9 @@ assert.ok(process.env.JAMBONZ_ACCOUNT_SID, 'You must define the JAMBONZ_ACCOUNT_
 assert.ok(process.env.JAMBONZ_API_KEY, 'You must define the JAMBONZ_API_KEY env variable');
 assert.ok(process.env.JAMBONZ_REST_API_BASE_URL, 'You must define the JAMBONZ_REST_API_BASE_URL env variable');
 {% if record %}
+{% if not enableEnv %}
 assert.ok(process.env.WS_RECORD_PATH, 'You must define the WS_RECORD_PATH env variable');
+{% endif %}
 {% endif %}
 
 const express = require('express');
@@ -56,7 +58,9 @@ app.use(express.json());
 if (process.env.WEBHOOK_SECRET) {
   app.use(WebhookResponse.verifyJambonzSignature(process.env.WEBHOOK_SECRET));
 }
-{% if enableEnv %}app.use(processEnvProperty);{% endif %}
+{% if enableEnv %}
+app.use(processEnvProperty);
+{% endif %}
 app.use('/', routes);
 
 // Handle 404 - Not Found
