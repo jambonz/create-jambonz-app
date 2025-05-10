@@ -1,6 +1,6 @@
 {
   "name": "create-jambonz-app",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Scaffold a jambonz webhook application",
   "main": "bin/index.js",
   "bin": {
