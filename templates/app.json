@@ -5,6 +5,7 @@
       "description": "Text to be spoken",
       "type": "string",
       "default": "Hi there and welcome to jam bones! Jam bones is the open source platform for building telephony and voice AI applications.  Looks like you have your system up and running.  Be sure to check out our docs at docs dot jamb bones dot org.  Have a great day!"
+      "uiHint": "textarea"
     }
   }{% if dial or record %},{% endif %}
   {% endif %}
